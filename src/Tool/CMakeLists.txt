@@ -1,0 +1,1 @@
+ADD_LIBRARY (Tool tool.cpp clock.cpp)
