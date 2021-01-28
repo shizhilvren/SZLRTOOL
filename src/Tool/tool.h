@@ -87,6 +87,7 @@ void output(OUT& out, const T& value, const Args&... args)
     TOOL::output(out, args...);
 }
 
+using namespace Debuger;
 const std::string debug = NONE "[" YELLOW "DEBUG" NONE "  ]" NONE ":";
 const std::string info = NONE "[INFO   ]" NONE ":";
 const std::string waring = NONE "[" PURPLE "WARING" NONE " ]" NONE ":";
