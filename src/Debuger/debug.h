@@ -6,12 +6,15 @@
 #include <iostream>
 
 ///用于是否输出调试信息
+namespace Debuger {
+#ifndef NODEBUG
 #define __DEBUG_ON__
 #define __TIME_ON__
 #define __ERROR_ON__
 #define __WARNING_ON__
 #define __INFO_ON__
 #define __DEBUG_CODE_ON__
+#endif
 
 #define NONE "\033[m"
 #define LIGHT_NONE "\033[1;37m"
@@ -34,80 +37,82 @@
 #define filename(x) strrchr(x, '/') ? strrchr(x, '/') + 1 : x
 
 #ifdef __ERROR_ON__
-#define ERROR(...)                                                                                                       \
-    do                                                                                                                   \
-    {                                                                                                                    \
+// 错误输出 printf风格
+#define ERROR(fmt, ...)                                                                                                  \
+    do {                                                                                                                 \
         fprintf(stderr, NONE "[" RED "ERROR" NONE "  ]" LIGHT_NONE "%s %s:%d->" NONE, __FILE__, __FUNCTION__, __LINE__); \
-        fprintf(stderr, __VA_ARGS__);                                                                                    \
+        fprintf(stderr, fmt, __VA_ARGS__);                                                                               \
     } while (0)
 #else
 #define ERROR(...)
 #endif
 
 #ifdef __WARNING_ON__
-#define WARNING(...)                                                                                                        \
-    do                                                                                                                      \
-    {                                                                                                                       \
+// 警告输出 printf风格
+#define WARNING(fmt, ...)                                                                                                   \
+    do {                                                                                                                    \
         fprintf(stdout, NONE "[" PURPLE "WARING" NONE " ]" LIGHT_NONE "%s %s:%d->" NONE, __FILE__, __FUNCTION__, __LINE__); \
-        fprintf(stdout, __VA_ARGS__);                                                                                       \
+        fprintf(stdout, fmt, __VA_ARGS__);                                                                                  \
     } while (0)
 #else
 #define WARNING(...)
 #endif
 
 #ifdef __INFO_ON__
-#define INFO(...)                                                                                         \
-    do                                                                                                    \
-    {                                                                                                     \
+// 信息输出 printf风格
+#define INFO(fmt, ...)                                                                                    \
+    do {                                                                                                  \
         fprintf(stdout, NONE "[INFO   ]" LIGHT_NONE "%s %s:%d->" NONE, __FILE__, __FUNCTION__, __LINE__); \
-        fprintf(stdout, __VA_ARGS__);                                                                     \
+        fprintf(stdout, fmt, __VA_ARGS__);                                                                \
     } while (0)
 #else
 #define INFO(...)
 #endif
 
 #ifdef __TIME_ON__
-#define SHOW_TIME(...)                                                                                                                      \
-    do                                                                                                                                      \
-    {                                                                                                                                       \
+// 时间戳输出输出 printf风格
+#define SHOW_TIME(fmt, ...)                                                                                                                 \
+    do {                                                                                                                                    \
         fprintf(stdout, NONE "[" BLUE "TIME" NONE "   ]" LIGHT_NONE "%s %s:%d %s->" NONE, __FILE__, __FUNCTION__, __LINE__, __TIMESTAMP__); \
-        fprintf(stdout, __VA_ARGS__);                                                                                                       \
+        fprintf(stdout, fmt, __VA_ARGS__);                                                                                                  \
     } while (0)
 #else
 #define SHOW_TIME(...)
 #endif
 
 #ifdef __DEBUG_ON__
-#define DEBUG(...)                                                                                                                    \
-    do                                                                                                                                \
-    {                                                                                                                                 \
+// 调试输出 printf风格
+#define DEBUG(fmt, ...)                                                                                                               \
+    do {                                                                                                                              \
         fprintf(stdout, NONE "[" YELLOW "DEBUG" NONE "  ]" LIGHT_NONE "%s %s:%d->" NONE, filename(__FILE__), __FUNCTION__, __LINE__); \
-        fprintf(stdout, __VA_ARGS__);                                                                                                 \
+        fprintf(stdout, fmt, __VA_ARGS__);                                                                                            \
     } while (0)
 #else
 #define DEBUG(...)
 #endif
 
 #ifdef __DEBUG_CODE_ON__
+//调试用代码
 #define DEBUG_CODE(...) \
-    do                  \
-    {                   \
+    do {                \
         __VA_ARGS__     \
     } while (0)
 #else
 #define DEBUG_CODE(...)
 #endif
 #ifdef __DEBUG_CODE_ON__
+//调试用类成员
 #define DEBUG_CODE_CLASS(type, name) \
     type name;
 #else
 #define DEBUG_CODE_CLASS(...)
 #endif
-#ifdef __DEBUG_CODE_ON__
-#define DEBUG_CODE_ALL(...) \
-    __VA_ARGS__
-#else
-#define DEBUG_CODE_ALL(...)
-#endif
+// #ifdef __DEBUG_CODE_ON__
+// #define DEBUG_CODE_ALL(...) \
+//     __VA_ARGS__
+// #else
+// #define DEBUG_CODE_ALL(...)
+// #endif
+}
 
 #endif //__DEBUG__

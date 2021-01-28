@@ -5,46 +5,30 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
+namespace TOOL {
 constexpr double PI = atan(1.0) * 4;
-// 生成get
+// 常规get
 #define CLASSGETBUILD(type, name)        \
 public:                                  \
     inline const type& get##name() const \
     {                                    \
         return this->name;               \
     }
-
+// 常规无const修饰get 可更改 请慎用
 #define CLASSGETBUILD_NOCONST(type, name) \
 public:                                   \
-    type& get##name()                     \
+    type& get##name##_change()            \
     {                                     \
         return this->name;                \
     }
 
-#define CLASSGETBUILD_NOY(type, name) \
-public:                               \
-    type get##name() const            \
-    {                                 \
-        return this->name;            \
+// 标准生成set
+#define CLASSSETBUILD(type, name)        \
+public:                                  \
+    inline void set##name(const type& v) \
+    {                                    \
+        this->name = v;                  \
     }
-
-// 生成set
-#define CLASSSETBUILD(type, name) \
-public:                           \
-    inline void set##name(type v) \
-    {                             \
-        this->name = v;           \
-    }
-
-// 自定义set
-#define CLASSSETBUILD_CODE(type, name, ...) \
-public:                                     \
-    inline void set##name(type v)           \
-    {                                       \
-        __VA_ARGS__                         \
-    }
-
-namespace TOOL {
 
 template <typename T>
 T norm1(const std::vector<T>& vec, int len = 0)
@@ -75,6 +59,7 @@ T norm2(const std::vector<T>& vec, int len = 0)
 }
 
 bool isFileCanRead(std::string filenname);
+//请慎用 无法批量注释
 void showInfo(const std::string info);
 
 // 列表分割 吧line 按空格分割存储再list中
