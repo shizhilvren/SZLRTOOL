@@ -1,4 +1,4 @@
 #include"showdebug.h"
 namespace Loger {
-Log log;
+Log log(Log::Level::Debug);
 }

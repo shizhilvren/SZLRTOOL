@@ -85,7 +85,7 @@ namespace Debuger {
 #define DEBUG(fmt, ...)                                                                                                               \
     do {                                                                                                                              \
         fprintf(stdout, NONE "[" YELLOW "DEBUG" NONE "  ]" LIGHT_NONE "%s %s:%d->" NONE, filename(__FILE__), __FUNCTION__, __LINE__); \
-        fprintf(stdout, fmt, __VA_ARGS__);                                                                                            \
+        fprintf(stdout, fmt, ##__VA_ARGS__);                                                                                            \
     } while (0)
 #else
 #define DEBUG(...)
@@ -107,12 +107,12 @@ namespace Debuger {
 #else
 #define DEBUG_CODE_CLASS(...)
 #endif
-// #ifdef __DEBUG_CODE_ON__
-// #define DEBUG_CODE_ALL(...) \
-//     __VA_ARGS__
-// #else
-// #define DEBUG_CODE_ALL(...)
-// #endif
+#ifdef __DEBUG_CODE_ON__
+#define DEBUG_CODE_ALL(...) \
+    __VA_ARGS__
+#else
+#define DEBUG_CODE_ALL(...)
+#endif
 }
 
 #endif //__DEBUG__

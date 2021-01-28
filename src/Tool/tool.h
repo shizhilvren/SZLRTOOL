@@ -1,8 +1,8 @@
 #ifndef __TOOL__
 #define __TOOL__
-#include "cmath"
-#include "debug.h"
+#include "../Debuger/debug.h"
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include <vector>
 namespace TOOL {
@@ -22,6 +22,12 @@ public:                                   \
         return this->name;                \
     }
 
+#define CLASSGETBUILD_NOY(type, name) \
+public:                               \
+    type get##name() const            \
+    {                                 \
+        return this->name;            \
+    }
 // 标准生成set
 #define CLASSSETBUILD(type, name)        \
 public:                                  \
@@ -87,7 +93,6 @@ void output(OUT& out, const T& value, const Args&... args)
     TOOL::output(out, args...);
 }
 
-using namespace Debuger;
 const std::string debug = NONE "[" YELLOW "DEBUG" NONE "  ]" NONE ":";
 const std::string info = NONE "[INFO   ]" NONE ":";
 const std::string waring = NONE "[" PURPLE "WARING" NONE " ]" NONE ":";
